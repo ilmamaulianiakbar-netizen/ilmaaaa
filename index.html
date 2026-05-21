@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerPath BK - Layanan Bimbingan Konseling Karier</title>
+  
+  <!-- Font Google Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Theme Customization -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          fontSize: {
+            '3xs': '0.65rem',
+            '4xs': '0.55rem',
+            '5xs': '0.50rem',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    
+    @media print {
+      body {
+        background-color: white !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg bg-slate-50/50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-sky-500/10 selection:text-sky-900">
+
+  <!-- TOP HEADER (Navigation & Logo) -->
+  <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 transition-all select-none no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 sm:h-20 items-center">
+        <!-- Logo Brand -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+          <div class="h-10 w-10 sm:h-11 sm:w-11 bg-gradient-to-tr from-sky-500 to-indigo-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-sky-500/20 active:scale-95 transition-transform duration-150">
+            <i data-lucide="compass" class="h-5.5 w-5.5"></i>
+          </div>
+          <div>
+            <div class="font-display font-extrabold text-sm sm:text-base tracking-tight leading-tight text-slate-905">
+              CareerPath <span class="text-sky-500 font-medium">BK</span>
+            </div>
+            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Siswa Cerdas BK Kreatif</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs Link Workspace -->
+        <nav class="hidden md:flex space-x-1 bg-slate-100/70 p-1.5 rounded-2xl border border-slate-100/50 text-xs font-bold text-slate-600">
+          <button onclick="switchTab('dashboard')" id="tab-dashboard" class="nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 bg-white text-slate-800 shadow-sm">
+            <i data-lucide="compass" class="h-4 w-4"></i>
+            <span>Dashboard</span>
+          </button>
+          <button onclick="switchTab('chat')" id="tab-chat" class="nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 hover:text-slate-800">
+            <i data-lucide="message-square" class="h-4 w-4 text-sky-500"></i>
+            <span>Tanya Guru BK</span>
+          </button>
+          <button onclick="switchTab('konseling')" id="tab-konseling" class="nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 hover:text-slate-800">
+            <i data-lucide="file-text" class="h-4 w-4 text-emerald-500"></i>
+            <span>Form Bimbingan</span>
+          </button>
+          <button onclick="switchTab('tes')" id="tab-tes" class="nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 hover:text-slate-800">
+            <i data-lucide="sparkles" class="h-4 w-4 text-indigo-500"></i>
+            <span>Tes Minat Holland</span>
+          </button>
+          <button onclick="switchTab('guru')" id="tab-guru" class="nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 hover:text-slate-800 text-rose-600 hover:bg-rose-50/50">
+            <i data-lucide="lock" class="h-4 w-4 text-rose-500"></i>
+            <span>Panel Guru BK</span>
+          </button>
+        </nav>
+
+        <!-- Small Mobile Menu Toggle Trigger -->
+        <div class="md:hidden">
+          <select onchange="switchTab(this.value)" id="mobile-tab-selector" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs rounded-xl px-2.5 py-2 font-bold focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="dashboard">🧭 Dashboard</option>
+            <option value="chat">💬 Tanya Guru BK</option>
+            <option value="konseling">📝 Form Bimbingan</option>
+            <option value="tes">✨ Tes Minat Holland</option>
+            <option value="guru">🔒 Panel Guru BK</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CORE AREA WORKSPACE (SPAs Tabs Container) -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- TAB 1: DASHBOARD / HOME -->
+    <div id="content-dashboard" class="tab-content space-y-12">
+      <!-- Welcome Hero Frame -->
+      <section class="bg-white border border-slate-100/80 rounded-3xl p-6 sm:p-12 shadow-xs space-y-6 relative overflow-hidden select-none">
+        <div class="absolute -right-16 -top-16 w-48 h-48 bg-sky-500/5 rounded-full blur-2xl"></div>
+        <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-indigo-500/5 rounded-full blur-2xl"></div>
+
+        <div class="space-y-3 z-10 relative">
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 bg-sky-50 text-sky-655 text-sky-600 rounded-full text-xs font-bold uppercase tracking-wide">
+            <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+            <span>Layanan BK Karir & Psikometri Modern</span>
+          </div>
+          <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-slate-850 tracking-tight leading-tight max-w-2xl">
+            Tentukan Rute Pendidikan Tinggi & <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-505 bg-gradient-to-r from-sky-500 to-indigo-500">Karir Terbaikmu</span>
+          </h1>
+          <p class="text-sm sm:text-base text-slate-500 max-w-xl leading-relaxed font-normal">
+            Bimbingan Konseling (BK) Karir interaktif yang memadukan kehangatan dari Konselor Sekolah dengan evaluasi tes psikologi Holland (RIASEC) dan bantuan AI Cerdas.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 pt-2 z-10 relative">
+          <button onclick="switchTab('tes')" class="px-6 py-3.5 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white font-bold text-sm rounded-2xl shadow-lg shadow-sky-500/10 hover:shadow-xl active:scale-95 transition-all duration-150 flex items-center space-x-2 cursor-pointer">
+            <span>Mulai Tes Minat Holland</span>
+            <i data-lucide="arrow-right" class="h-4 w-4"></i>
+          </button>
+          <button onclick="switchTab('chat')" class="px-6 py-3.5 bg-slate-50 border border-slate-200 text-slate-700 hover:bg-slate-100 font-bold text-sm rounded-2xl active:scale-95 transition-all duration-150 flex items-center space-x-2 cursor-pointer">
+            <span>Konseling Chat Edukatif</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Services Grid Cards -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="h-10 w-10 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center">
+              <i data-lucide="message-square" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-sans font-extrabold text-lg text-slate-800">Obrolan Ruang BK</h3>
+            <p class="text-xs text-slate-500 leading-relaxed font-normal">
+              Konseling interaktif mengenai studi lanjut, keraguan potensi, atau hambatan belajar langsung dengan AI asisten terpercaya.
+            </p>
+          </div>
+          <button onclick="switchTab('chat')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1 pl-1 cursor-pointer">
+            <span>Buka Obrolan</span>
+            <i data-lucide="chevron-right" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="h-10 w-10 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center">
+              <i data-lucide="file-text" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-sans font-extrabold text-lg text-slate-800">Formulir Peminatan</h3>
+            <p class="text-xs text-slate-500 leading-relaxed font-normal">
+              Ajukan curhat detail terstruktur mengenai dilema kuliah atau kendala orang tua untuk mendapatkan rencana aksi studi yang komprehensif.
+            </p>
+          </div>
+          <button onclick="switchTab('konseling')" class="text-xs font-bold text-emerald-600 hover:text-emerald-800 flex items-center space-x-1 pl-1 cursor-pointer">
+            <span>Isi Formulir</span>
+            <i data-lucide="chevron-right" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="h-10 w-10 bg-sky-50 text-sky-500 rounded-xl flex items-center justify-center">
+              <i data-lucide="sparkles" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-sans font-extrabold text-lg text-slate-800">Riset Holland Codes</h3>
+            <p class="text-xs text-slate-500 leading-relaxed font-normal">
+              Kenali minat karir Holland Codes (RIASEC) kamu lewat tes interaktif berbobot analisis psikologi studi lanjutan.
+            </p>
+          </div>
+          <button onclick="switchTab('tes')" class="text-xs font-bold text-sky-600 hover:text-sky-850 flex items-center space-x-1 pl-1 cursor-pointer">
+            <span>Mulai Holland Tes</span>
+            <i data-lucide="chevron-right" class="h-4 w-4"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Direct Contact with Ibu Ilma Banner -->
+      <section class="bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 space-y-8 select-none">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div class="space-y-4 max-w-xl text-center md:text-left">
+            <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-800 tracking-tight leading-none">Hubungi Ibu Ilma (WhatsApp & Gmail)</h3>
+            <p class="text-sm text-slate-500 leading-relaxed font-normal">
+              Jangan ragu untuk menghubungi Saya jika kamu butuh konsultasi privat langsung, mau curhat masalah karir/kuliah, atau butuh mediasi dengan orang tua. Pesanmu dijamin 100% aman dan rahasia!
+            </p>
+            
+            <!-- Automated Guidance Indicator Box -->
+            <div class="bg-sky-500/10 border border-sky-100/50 rounded-2xl p-4 mt-2 text-xs text-sky-900 leading-relaxed font-normal text-left max-w-xl">
+              💡 <strong>Sapaan Otomatis dari Ibu Ilma:</strong> Setelah Anda mengirim pesan sopan terlampir, Ibu Ilma akan merespons hangat dengan sapaan bimbingan: <br />
+              <span class="italic font-serif text-slate-700 block mt-1.5 pl-3 border-l-2 border-sky-400">
+                "Halo Nak, selamat datang di Ruang Bimbingan Konseling (BK) Karir. Saya Ibu Ilma Mauliani, Konselor Karir Anda. Di sini kamu bebas mengutarakan kebingungan, impian, atau bahkan kekhawatiranmu seputar masa depan tanpa takut dihakimi. Apa yang sedang memenuhi kepalamu saat ini?"
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto shrink-0">
+            <!-- WhatsApp Action Card -->
+            <a
+              href="https://wa.me/6285283725745?text=Assalamu%27alaikum%20wr.%20wb.%20Ibu%20Ilma%2C%20mohon%20maaf%20mengganggu%20waktunya.%20Saya%20siswa%20bimbingan%20ingin%20berkonsultasi%20mengenai%20karir%20dan%20perencanaan%20masa%20depan%20saya%20melalui%20program%20CareerPath%20BK.%20Apakah%20kiranya%20Ibu%20ada%2520waktu%2520luang%2520untuk%2520berdiskusi%253F%20Terima%20kasih%20banyak%20sebelumnya%2C%20Ibu."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-center space-x-3 px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm sm:text-base rounded-2xl cursor-pointer shadow-lg shadow-emerald-500/10 active:scale-95 transition-all duration-150 w-full sm:w-auto"
+            >
+              <i data-lucide="message-square" class="h-5 w-5"></i>
+              <span>Hubungi via WhatsApp</span>
+            </a>
+
+            <!-- Email Link Card -->
+            <a
+              href="mailto:ilmamaulianiakbar@gmail.com?subject=Konseling%20Karir%20Siswa%20-%20CareerPath%20BK&body=Assalamu%27alaikum%20wr.%20wb.%20Ibu%20Ilma%2C%20mohon%20maaf%20mengganggu%20waktunya.%20Saya%20siswa%20bimbingan%20ingin%20berkonsultasi%20mengenai%20karir%20dan%20perencanaan%20masa%20depan%20saya%2520melalui%2520program%2520CareerPath%2520BK.%2520Apakah%2520kiranya%2520Ibu%2520ada%2520waktu%2520luang%2520untuk%2520berdiskusi%253F%2520Terima%2520kasih%2520banyak%2520sebelumnya%252C%2520Ibu."
+              class="flex items-center justify-center space-x-3 px-6 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-sm sm:text-base rounded-2xl cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all duration-150 w-full sm:w-auto"
+            >
+              <i data-lucide="mail" class="h-5 w-5 text-sky-500"></i>
+              <span>Tulis Surat Email</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- TAB 2: TANYA GURU BK (CHAT INTERAKTIF) -->
+    <div id="content-chat" class="tab-content hidden max-w-4xl mx-auto h-[620px] bg-white border border-slate-100 rounded-3xl shadow-sm flex flex-col overflow-hidden relative">
+      <!-- Top Bar Workspace -->
+      <div class="bg-slate-50/70 border-b border-slate-100 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 z-10 select-none">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <div class="h-10 w-10 bg-sky-500 rounded-2xl flex items-center justify-center text-white font-bold text-sm shadow-md shadow-sky-500/10">
+              IM
+            </div>
+            <div class="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-emerald-500 border-2 border-white rounded-full"></div>
+          </div>
+          <div>
+            <div class="font-bold text-sm sm:text-base text-slate-800">Ibu Ilma Mauliani</div>
+            <div class="text-[9px] text-emerald-600 font-semibold tracking-wider uppercase">Konselor Karir Sekolah (Online)</div>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+          <a
+            href="https://wa.me/6285283725745?text=Assalamu%27alaikum%20wr.%20wb.%20Ibu%20Ilma%2C%20mohon%20maaf%20mengganggu%20waktunya.%20Saya%20siswa%20bimbingan%20ingin%20berkonsultasi%20mengenai%20karir%20dan%20perencanaan%20masa%20depan%20saya%20melalui%20program%20CareerPath%20BK.%20Apakah%20kiranya%20Ibu%20ada%2520waktu%2520luang%2520untuk%2520berdiskusi%253F%20Terima%20kasih%20banyak%20sebelumnya%2C%20Ibu."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center space-x-1 px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-750 font-extrabold text-3xs rounded-xl border border-emerald-100 transition-colors"
+            title="Chat WhatsApp Ibu Ilma"
+          >
+            <span>💬 WhatsApp</span>
+          </a>
+          
+          <a
+            href="mailto:ilmamaulianiakbar@gmail.com?subject=Konseling%20Karir%20Siswa%20-%20CareerPath%20BK&body=Assalamu%27alaikum%20wr.%20wb.%20Ibu%20Ilma%2C%20mohon%20maaf%20mengganggu%20waktunya.%20Saya%20siswa%20bimbingan%20ingin%20berkonsultasi%20mengenai%20karir%20dan%20perencanaan%2520masa%2520depan%2520saya%2520melalui%2520program%2520CareerPath%2520BK.%2520Apakah%2520kiranya%2520Ibu%2520ada%252520waktu%252520luang%252520untuk%252520berdiskusi%25253F%20Terima%20kasih%20banyak%20sebelumnya%2C%20Ibu."
+            class="flex items-center space-x-1 px-2.5 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-750 font-extrabold text-3xs rounded-xl border border-sky-100 transition-colors"
+            title="Kirim Email Ibu Ilma"
+          >
+            <span>📧 Email</span>
+          </a>
+
+          <button
+            onclick="clearChat()"
+            class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-all cursor-pointer"
+            title="Hapus riwayat obrolan"
+          >
+            <i data-lucide="refresh-cw" class="h-4.5 w-4.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Canvas Workspace -->
+      <div id="chat-messages" class="flex-grow p-6 overflow-y-auto space-y-4 bg-gradient-to-b from-slate-50/50 to-white">
+        <!-- Welcoming msg from Ibu Ilma custom -->
+        <div class="flex items-start max-w-lg space-x-3">
+          <div class="h-8 w-8 bg-sky-100 rounded-lg flex items-center justify-center text-sky-700 font-bold shrink-0 text-xs">
+            IM
+          </div>
+          <div class="p-3.5 bg-white border border-slate-100 text-slate-800 rounded-2xl rounded-tl-none text-xs sm:text-sm shadow-2xs leading-relaxed font-normal whitespace-pre-line">
+            Halo Nak, selamat datang di Ruang Bimbingan Konseling (BK) Karir. Saya Ibu Ilma Mauliani, Konselor Karir Anda. Di sini kamu bebas mengutarakan kebingungan, impian, atau bahkan kekhawatiranmu seputar masa depan tanpa takut dihakimi. Apa yang sedang memenuhi kepalamu saat ini?
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar Workspace -->
+      <form id="chat-form" onsubmit="handleSendChat(event)" class="border-t border-slate-100 p-4 bg-white flex items-center space-x-3 no-print select-none">
+        <input
+          type="text"
+          id="chat-input"
+          required
+          placeholder="Tanyakan mengenai studi lanjut, jurusan SNBT, dsb..."
+          class="flex-grow px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"
+        />
+        <button
+          type="submit"
+          class="p-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-md shadow-sky-500/10 cursor-pointer self-stretch flex items-center justify-center transition-all duration-150"
+        >
+          <i data-lucide="send" class="h-4 w-4"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 3: FORMULIR BIMBINGAN (COUNSELING FORM) -->
+    <div id="content-konseling" class="tab-content hidden max-w-4xl mx-auto py-2">
+      <!-- FORM STAGE -->
+      <div id="counseling-form-box" class="bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-sm space-y-8">
+        <div class="text-center space-y-2">
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 bg-sky-50 text-sky-600 rounded-full text-xs font-bold uppercase tracking-wider">
+            <i data-lucide="file-text" class="h-3.5 w-3.5"></i>
+            <span>Konseling Online Terstruktur</span>
+          </div>
+          <h2 class="font-sans font-extrabold text-2xl sm:text-3xl text-slate-800">Formulir Bimbingan & Solusi BK</h2>
+          <p class="text-sm sm:text-base text-slate-500 max-w-xl mx-auto leading-relaxed">
+            Ceritakan kendala, minat belajar, keraguan SNBP, atau dilema orang tua. Kecerdasan Buatan (Guru BK AI) akan menyusun bimbingan psikologi dan panduan belajar terperinci.
+          </p>
+        </div>
+
+        <form onsubmit="handleFormSubmit(event)" class="max-w-2xl mx-auto space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="space-y-1.5">
+              <label class="text-sm font-bold text-slate-700" for="c-nama">Nama Lengkap</label>
+              <input type="text" id="c-nama" required placeholder="Nama Anda" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm">
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-sm font-bold text-slate-700" for="c-kelas">Kelas & Jurusan</label>
+              <input type="text" id="c-kelas" required placeholder="Contoh: XII IPS 2" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm">
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-sm font-bold text-slate-700" for="c-usia">Usia</label>
+              <input type="number" id="c-usia" required value="17" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm">
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-sm font-bold text-slate-700" for="c-curhat">Ceritakan Kendalamu (Curhat Karir)</label>
+            <textarea id="c-curhat" rows="5" required placeholder="Misalnya: 'Saya sangat menyukai desain grafis/menggambar, tapi orang tua menginginkan saya mengambil kedokteran karena khawatir dengan prospek finansial seniman. Saya jadi malas belajar dan ketakutan menghadapi SNBT nanti...'" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm leading-relaxed"></textarea>
+            <p class="text-[10px] text-slate-400">Pesan Anda rahasia dan dijamin kerahasiaannya oleh asas bimbingan konseling dan etika privasi Guru BK.</p>
+          </div>
+
+          <button id="submit-form-btn" type="submit" class="w-full py-4 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-2xl text-sm transition-all shadow-md active:scale-95 cursor-pointer flex items-center justify-center space-x-2">
+            <i data-lucide="send" class="h-4 w-4"></i>
+            <span>Matangkan Analisis Bimbingan</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- OUTCOME RESULT STAGE (HIDDEN BY DEFAULT) -->
+      <div id="counseling-result-box" class="hidden bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-sm space-y-8 print-card">
+        <div class="flex justify-between items-start pb-5 border-b border-slate-100 no-print">
+          <div>
+            <span class="px-2.5 py-0.5 bg-sky-50 text-sky-700 font-extrabold text-[10px] rounded-md uppercase">Penelaahan BK Sukses</span>
+            <h3 class="font-sans font-extrabold text-xl sm:text-2xl text-slate-800 mt-1">Solusi & Lembar Rekomendasi Karir Siswa</h3>
+          </div>
+          <button onclick="resetCounselingForm()" class="p-2 bg-slate-50 text-slate-400 hover:text-slate-600 rounded-xl transition-colors cursor-pointer">
+            <i data-lucide="refresh-cw" class="h-4.5 w-4.5"></i>
+          </button>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <div class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wide">Nama Siswa</div>
+            <div id="res-nama" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wide">Kelas & Tingkat</div>
+            <div id="res-kelas" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wide">Tanggal Masuk</div>
+            <div id="res-date" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <h4 class="font-sans font-bold text-sm text-slate-800 flex items-center space-x-1.5 uppercase tracking-wide">
+              <i data-lucide="award" class="h-4.5 w-4.5 text-sky-500"></i>
+              <span>Analisis Psikologi Guru BK & AI:</span>
+            </h4>
+            <div id="res-analysis" class="text-slate-600 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-normal">
+              -
+            </div>
+          </div>
+
+          <div class="p-5 bg-sky-50/50 border border-sky-100 rounded-2xl space-y-2">
+            <h4 class="font-sans font-bold text-sm text-sky-850 flex items-center space-x-1.5 uppercase tracking-wide">
+              <span>💡 Saran Bimbingan Guru BK:</span>
+            </h4>
+            <div id="res-guidance" class="text-slate-700 text-xs font-serif italic leading-relaxed whitespace-pre-line">
+              -
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+            <div class="space-y-3">
+              <h5 class="font-sans font-bold text-xs uppercase text-slate-500 tracking-wider">Langkah Rencana Aksi Pembebasan Kendala:</h5>
+              <div id="res-steps" class="space-y-2 text-xs text-slate-700 font-medium">
+                <!-- steps loaded dynamically -->
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h5 class="font-sans font-bold text-xs uppercase text-slate-500 tracking-wider">Sektor Industri Prospektif:</h5>
+              <div id="res-sectors" class="flex flex-wrap gap-1.5">
+                <!-- sectors loaded dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-4 border-t border-slate-100 no-print">
+          <button onclick="window.print()" class="flex items-center space-x-1 px-4 py-2 border border-slate-200 text-slate-600 hover:text-slate-800 rounded-xl text-xs font-semibold transition-all cursor-pointer">
+            <i data-lucide="printer" class="h-4 w-4"></i>
+            <span>Cetak Hasil</span>
+          </button>
+          <button onclick="resetCounselingForm()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold cursor-pointer">
+            Konseling Baru
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TES HOLLAND Codes (RIASEC ASSESSMENT) -->
+    <div id="content-tes" class="tab-content hidden max-w-4xl mx-auto py-2">
+      <!-- STAGE 1: REGISTRATION -->
+      <div id="test-register-box" class="bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-sm space-y-8">
+        <div class="text-center space-y-2">
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 bg-indigo-50 text-indigo-705 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider">
+            <i data-lucide="compass" class="h-3.5 w-3.5"></i>
+            <span>Holland RIASEC Assessment</span>
+          </div>
+          <h2 class="font-sans font-extrabold text-2xl sm:text-3xl text-slate-800">Kenali Potensi Belajar & Kerja</h2>
+          <p class="text-sm sm:text-base text-slate-500 max-w-xl mx-auto leading-relaxed">
+            Sistem evaluasi psikologi berdasarkan 6 minat utama John Holland untuk menemukan jurusan kuliah, studi taktis, dan pekerjaan yang paling serasi dengan mental kepribadian Anda.
+          </p>
+        </div>
+
+        <form onsubmit="handleStartTest(event)" class="max-w-md mx-auto space-y-6">
+          <div class="space-y-4">
+            <div class="space-y-1.5">
+              <label class="text-sm font-bold text-slate-700" for="t-nama">Nama Lengkap Murid</label>
+              <input type="text" id="t-nama" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-1.5">
+                <label class="text-sm font-bold text-slate-700" for="t-kelas">Tingkat Kelas</label>
+                <input type="text" id="t-kelas" required placeholder="XII IPA 1" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm">
+              </div>
+              <div class="space-y-1.5">
+                <label class="text-sm font-bold text-slate-700" for="t-usia">Usia Anda</label>
+                <input type="number" id="t-usia" required value="17" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-4 bg-slate-850 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-2xl text-sm transition-all shadow-md active:scale-95 cursor-pointer flex items-center justify-center space-x-2">
+            <span>Mulai Penilaian RIASEC</span>
+            <i data-lucide="arrow-right" class="h-4 w-4"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- STAGE 2: QUIZ TESTING WORKSPACE -->
+      <div id="test-quiz-box" class="hidden bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-sm space-y-8 select-none">
+        <div class="flex justify-between items-center text-xs text-slate-450 font-bold border-b border-slate-50 pb-4">
+          <div class="flex items-center space-x-2">
+            <span class="h-6 px-2 bg-indigo-50 text-indigo-700 rounded flex items-center text-4xs uppercase tracking-wide" id="q-category-tag">Realistic</span>
+            <span class="text-slate-500" id="q-number-indicator">Pertanyaan 1/12</span>
+          </div>
+          <div class="h-1.5 bg-slate-100 rounded-full w-24 sm:w-36 overflow-hidden">
+            <div id="q-progress-bar" class="bg-indigo-500 h-full rounded-full transition-all duration-300" style="width: 8.3%"></div>
+          </div>
+        </div>
+
+        <div class="text-center py-6 sm:py-10 max-w-2xl mx-auto space-y-4">
+          <p class="font-display font-extrabold text-xl sm:text-2xl text-slate-800 leading-relaxed" id="q-text-card">
+            - text -
+          </p>
+          <p class="text-4xs text-slate-400 font-medium">Beri skor seberapa cocok kecenderungan ini dengan hasrat belajarmu:</p>
+        </div>
+
+        <!-- Score Selector Grid -->
+        <div class="grid grid-cols-5 gap-2.5 sm:gap-4 max-w-xl mx-auto">
+          <button onclick="handleAnswer(1)" class="p-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-2xl text-center active:scale-95 transition-all cursor-pointer">
+            <div class="text-sm font-black text-slate-700">1</div>
+            <div class="text-[9px] text-slate-450 mt-1 font-semibold leading-none">Sangat Tidak Sesuai</div>
+          </button>
+          <button onclick="handleAnswer(2)" class="p-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-2xl text-center active:scale-95 transition-all cursor-pointer">
+            <div class="text-sm font-black text-slate-700">2</div>
+            <div class="text-[9px] text-slate-450 mt-1 font-semibold leading-none">Tidak Sesuai</div>
+          </button>
+          <button onclick="handleAnswer(3)" class="p-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-2xl text-center active:scale-95 transition-all cursor-pointer">
+            <div class="text-sm font-black text-slate-700">3</div>
+            <div class="text-[9px] text-slate-450 mt-1 font-semibold leading-none">Ragu</div>
+          </button>
+          <button onclick="handleAnswer(4)" class="p-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-2xl text-center active:scale-95 transition-all cursor-pointer">
+            <div class="text-sm font-black text-slate-700">4</div>
+            <div class="text-[9px] text-slate-450 mt-1 font-semibold leading-none">Sesuai</div>
+          </button>
+          <button onclick="handleAnswer(5)" class="p-3 bg-indigo-50/50 border border-indigo-200 hover:bg-indigo-100 rounded-2xl text-center active:scale-95 transition-all cursor-pointer">
+            <div class="text-sm font-black text-indigo-700">5</div>
+            <div class="text-[9px] text-indigo-550 mt-1 font-semibold leading-none text-indigo-600">Sangat Sesuai</div>
+          </button>
+        </div>
+
+        <!-- Back Button Option -->
+        <div class="flex justify-between pt-6 border-t border-slate-50 max-w-xl mx-auto">
+          <button id="q-back-btn" onclick="prevQuestion()" disabled class="px-4 py-2 hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-500 disabled:opacity-30 disabled:pointer-events-none cursor-pointer">
+            Kembali
+          </button>
+          <button id="q-forward-btn" onclick="nextQuestion()" disabled class="px-4 py-2 hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-500 disabled:opacity-30 disabled:pointer-events-none cursor-pointer">
+            Lewati
+          </button>
+        </div>
+      </div>
+
+      <!-- STAGE 3: RESULTS ANALYTICS PRINTABLE CARD -->
+      <div id="test-result-box" class="hidden bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-sm space-y-8 print-card animate-fade-in">
+        <div class="flex justify-between items-start pb-5 border-b border-slate-100 no-print">
+          <div>
+            <span class="px-2.5 py-0.5 bg-indigo-55 bg-indigo-50 text-indigo-700 font-extrabold text-[10px] rounded-md uppercase">Evaluasi Holland Psikometri Berhasil</span>
+            <h3 class="font-sans font-extrabold text-xl sm:text-2xl text-slate-805 mt-1">Sertifikat Temuan Profil Minat & Karir Holland</h3>
+          </div>
+          <button onclick="resetTest()" class="p-2 bg-slate-50 text-slate-400 hover:text-slate-600 rounded-xl transition-colors cursor-pointer">
+            <i data-lucide="refresh-cw" class="h-4.5 w-4.5"></i>
+          </button>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <div class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wide">Nama Pengisi</div>
+            <div id="t-res-nama" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wide">Kelas & Usia</div>
+            <div id="t-res-kelas" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wide">Sertifikat Penyelesaian</div>
+            <div id="t-res-date" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
+          </div>
+        </div>
+
+        <!-- RIASEC Score Card Graph -->
+        <div class="space-y-3">
+          <div class="text-3xs text-slate-400 uppercase font-extrabold tracking-wider">Sebaran Hasil Minat Bakat (RIASEC Profile):</div>
+          <div class="grid grid-cols-2 sm:grid-cols-6 gap-3" id="scores-container-box">
+            <!-- Loaded via script dynamically -->
+          </div>
+        </div>
+
+        <!-- Dominant category evaluation -->
+        <div class="space-y-6">
+          <div id="t-res-dominant-banner" class="p-5 bg-indigo-50/40 border border-indigo-101 border-indigo-100 rounded-2xl space-y-2">
+            <h4 class="font-sans font-extrabold text-indigo-900 text-sm flex items-center space-x-1.5 uppercase leading-none">
+              <span>👑 Dominan: <span id="t-dominant-title">Social (Sosial/Pendidikan)</span></span>
+            </h4>
+            <p id="t-dominant-desc" class="text-slate-700 text-xs sm:text-sm leading-relaxed font-normal">
+              -
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Majors recommendations -->
+            <div class="space-y-3">
+              <h5 class="font-sans font-bold text-xs uppercase text-slate-400 tracking-wider">Rekomendasi Jurusan Pendidikan Tinggi:</h5>
+              <div id="t-res-majors" class="space-y-2">
+                <!-- Majors loaded dynamically -->
+              </div>
+            </div>
+
+            <!-- Career path recommendations -->
+            <div class="space-y-3">
+              <h5 class="font-sans font-bold text-xs uppercase text-slate-400 tracking-wider">Potensi & Rute Pekerjaan Komersial:</h5>
+              <div id="t-res-careers" class="space-y-2">
+                <!-- Careers loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Study guidance -->
+          <div class="space-y-3">
+            <h5 class="font-sans font-bold text-xs uppercase text-slate-400 tracking-wider">Langkah Belajar Terbimbing Strategis:</h5>
+            <div id="t-res-strategy" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- Strategies loaded dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-4 border-t border-slate-100 no-print">
+          <button onclick="window.print()" class="flex items-center space-x-1 px-4 py-2 border border-slate-200 text-slate-600 hover:text-slate-800 rounded-xl text-xs font-semibold transition-all cursor-pointer">
+            <i data-lucide="printer" class="h-4 w-4"></i>
+            <span>Cetak Hasil Tes</span>
+          </button>
+          <button onclick="resetTest()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold cursor-pointer">
+            Ulangi Tes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: PANEL KHUSUS GURU BK (MONITOR HISTORY & PRINT REQUISITIONS) -->
+    <div id="content-guru" class="tab-content hidden space-y-8 select-none">
+      
+      <!-- SUB TAB 5A: LOGIN AUTH BOX IF NOT UNLOCKED -->
+      <div id="guru-login-box" class="max-w-md mx-auto py-12">
+        <div class="bg-white border border-slate-100 rounded-3xl p-8 shadow-sm space-y-6 text-center">
+          <div class="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-sky-50 text-sky-500 mb-2">
+            <i data-lucide="lock" class="h-6 w-6"></i>
+          </div>
+          
+          <div class="space-y-1.5">
+            <h2 class="font-sans font-extrabold text-2xl text-slate-800">Panel Khusus Guru BK</h2>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Selamat datang Ibu <strong>Ilma Mauliani</strong>. Silakan masukkan kata sandi akses khusus Anda untuk meninjau formulir bimbingan masuk dan hasil tes psikologi minat murid Anda.
+            </p>
+          </div>
+
+          <form onsubmit="handleGuruLogin(event)" class="space-y-4">
+            <div class="space-y-1.5 text-left">
+              <label class="text-xs font-bold text-slate-700" for="g-pass">Kata Sandi Akses</label>
+              <input type="password" id="g-pass" required placeholder="Sandi khusus BK (ilma123)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 text-sm font-mono text-center">
+              <p class="text-[9px] text-slate-400 mt-1">Petunjuk: Gunakan sandi bimbingan <span class="font-bold font-mono text-slate-600">ilma123</span></p>
+            </div>
+
+            <div id="login-error" class="hidden p-3 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-semibold flex items-center space-x-1.5 text-left animate-pulse">
+              <i data-lucide="alert-circle" class="h-4 w-4 shrink-0"></i>
+              <span id="login-error-text">Terjadi Kesalahan</span>
+            </div>
+
+            <button type="submit" class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm rounded-xl cursor-pointer shadow-md transition-all active:scale-[0.98]">
+              Buka Kunci Akses Layanan BK
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- SUB TAB 5B: ACTUAL RECORD DASHBOARD IF UNLOCKED (HIDDEN BY DEFAULT) -->
+      <div id="guru-dashboard-box" class="hidden space-y-8 animate-fade-in no-print">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-slate-100 p-6 rounded-3xl shadow-xs">
+          <div class="space-y-1">
+            <div class="inline-flex items-center space-x-1 px-2.5 py-0.5 bg-emerald-50 text-emerald-700 rounded-md text-[10px] font-bold uppercase tracking-wider">
+              <i data-lucide="unlock" class="h-3 w-3"></i>
+              <span>Sesi Terbuka</span>
+            </div>
+            <h2 class="font-sans font-extrabold text-2xl text-slate-850">Ruang Panel Monitor BK Ibu Ilma</h2>
+            <p class="text-slate-400 text-xs font-medium">Monitor hasil isian tes dan curhat siswa yang tersimpan di sistem.</p>
+          </div>
+
+          <div class="flex space-x-2 shrink-0">
+            <button onclick="syncGuruStatsAndTables()" class="px-3.5 py-2 hover:bg-slate-50 border border-slate-200 text-slate-650 rounded-xl text-xs font-semibold transition-all cursor-pointer">
+              Segarkan Data
+            </button>
+            <button onclick="clearAllDataSystem()" class="flex items-center space-x-1 px-3.5 py-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 rounded-xl text-xs font-bold transition-all cursor-pointer">
+              <i data-lucide="trash-2" class="h-4 w-4"></i>
+              <span>Hapus Semua</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mini Stats Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-xs flex items-center space-x-4">
+            <div class="h-11 w-11 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center">
+              <i data-lucide="file-text" class="h-5.5 w-5.5"></i>
+            </div>
+            <div>
+              <div id="stat-counsel" class="text-2xl font-black text-slate-850">0</div>
+              <p class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wider">Formulir Curhat Masuk</p>
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-xs flex items-center space-x-4">
+            <div class="h-11 w-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+              <i data-lucide="bar-chart-3" class="h-5.5 w-5.5"></i>
+            </div>
+            <div>
+              <div id="stat-tests" class="text-2xl font-black text-slate-850">0</div>
+              <p class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wider">Siswa Menyelesaikan Tes</p>
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-xs flex items-center space-x-4">
+            <div class="h-11 w-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+              <i data-lucide="users" class="h-5.5 w-5.5"></i>
+            </div>
+            <div>
+              <div id="stat-uniques" class="text-2xl font-black text-slate-850">0</div>
+              <p class="text-[9px] text-slate-400 font-extrabold uppercase tracking-wider">Total Siswa Terdaftar</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Filter & Active Tab -->
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-50 pb-5">
+            <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-500">
+              <button onclick="setGuruSubTab('counseling_submissions')" id="subtab-counseling" class="px-4 py-2 rounded-lg transition-all cursor-pointer bg-white text-slate-800 shadow-3xs flex items-center space-x-1.5">
+                <i data-lucide="file-text" class="h-4 w-4"></i>
+                <span>Form Bimbingan BK</span>
+              </button>
+              <button onclick="setGuruSubTab('riasec_submissions')" id="subtab-riasec" class="px-4 py-2 rounded-lg transition-all cursor-pointer flex items-center space-x-1.5 hover:text-slate-800">
+                <i data-lucide="bar-chart-3" class="h-4 w-4 text-indigo-500"></i>
+                <span>Hasil Tes Holland</span>
+              </button>
+            </div>
+
+            <!-- Search Area -->
+            <div class="relative w-full sm:w-72">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i data-lucide="search" class="h-4 w-4 text-slate-400"></i>
+              </div>
+              <input type="text" id="g-search-term" oninput="triggerGuruSearch()" placeholder="Cari siswa atau kelas..." class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/10 focus:border-sky-500 text-xs">
+            </div>
+          </div>
+
+          <!-- Table Content for Counseling -->
+          <div id="guru-counseling-table-container" class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-100 text-slate-450 text-[10px] uppercase tracking-wider font-extrabold">
+                  <th class="pb-3.5 pl-2">Tanggal Pengisian</th>
+                  <th class="pb-3.5">Nama Siswa</th>
+                  <th class="pb-3.5">Kelas & Jurusan</th>
+                  <th class="pb-3.5">Curhatan Masuk</th>
+                  <th class="pb-3.5 text-right pr-2">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="guru-counseling-tbody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+            <div id="guru-counseling-empty" class="hidden py-12 text-center text-slate-405 font-semibold text-xs sm:text-sm">
+              Nihil data bimbingan konseling di memori local browser Anda.
+            </div>
+          </div>
+
+          <!-- Table Content for RIASEC -->
+          <div id="guru-riasec-table-container" class="hidden overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-100 text-slate-455 text-[10px] uppercase tracking-wider font-extrabold">
+                  <th class="pb-3.5 pl-2">Tanggal Tes</th>
+                  <th class="pb-3.5">Nama Siswa</th>
+                  <th class="pb-3.5">Kelas</th>
+                  <th class="pb-3.5">Tipe Dominan</th>
+                  <th class="pb-3.5">Potensi Minat</th>
+                  <th class="pb-3.5 text-right pr-2">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="guru-riasec-tbody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+            <div id="guru-riasec-empty" class="hidden py-12 text-center text-slate-405 font-semibold text-xs sm:text-sm">
+              Nihil rekam minat bakat psikometrik di memori local browser Anda.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM FOOTER -->
+  <footer class="bg-slate-900 text-slate-300 py-10 border-t border-slate-800 text-center select-none print:hidden mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-xs sm:text-sm font-semibold text-slate-350">
+        <span>Konselor BK: <strong class="text-white">Ibu Ilma Mauliani</strong></span>
+        <span class="hidden sm:inline text-slate-700">|</span>
+        <a 
+          href="mailto:ilmamaulianiakbar@gmail.com?subject=Konseling%20Karir%20Siswa" 
+          class="text-sky-400 hover:text-sky-305 underline underline-offset-4 transition-colors referrer-policy"
+          referrerpolicy="no-referrer"
+        >
+          Email: ilmamaulianiakbar@gmail.com
+        </a>
+        <span class="hidden sm:inline text-slate-700">|</span>
+        <a 
+          href="https://wa.me/6285283725745?text=Assalamu%27alaikum%20wr.%20wb.%20Ibu%20Ilma%2C%20mohon%20maaf%20mengganggu%20waktunya.%20Saya%20siswa%20bimbingan%20ingin%20berkonsultasi%20mengenai%20karir%20dan%20perencanaan%20masa%20depan%20saya%2520melalui%2520program%2520CareerPath%2520BK.%2520Apakah%2520kiranya%2520Ibu%2520ada%2520waktu%2520luang%2520untuk%2520berdiskusi%253F%2520Terima%2520kasih%2520banyak%2520sebelumnya%252C%2520Ibu." 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="text-emerald-400 hover:text-emerald-305 underline underline-offset-4 transition-colors"
+        >
+          WA Ibu Ilma
+        </a>
+      </div>
+      <p class="text-[10px] text-slate-500 font-medium">
+        &copy; 2026 Layanan Bimbingan Konseling Karier CareerPath BK. Ditenagai oleh Gemini AI & Ibu Ilma Mauliani.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Lucide Icons Bundle CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- INTERACTIVE VANILLA JS ARCHITECTURE -->
+  <script>
+    // Initialize Lucide Icons initially
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadStoredSubmissions();
+      renderChatLogs();
+    });
+
+    // SPA Router State Management
+    function switchTab(tabName) {
+      // Toggle Tab Contents
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(el => el.classList.add('hidden'));
+      
+      const targetContent = document.getElementById(`content-${tabName}`);
+      if (targetContent) targetContent.classList.remove('hidden');
+
+      // Update Nav buttons styling
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => {
+        btn.className = 'nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 hover:text-slate-800';
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabName}`);
+      if (activeBtn) {
+        if (tabName === 'guru') {
+          activeBtn.className = 'nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 bg-rose-50 text-rose-700 shadow-sm font-bold';
+        } else {
+          activeBtn.className = 'nav-btn px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 bg-white text-slate-800 shadow-sm font-bold';
+        }
+      }
+
+      // Sync selector for mobile
+      const selector = document.getElementById('mobile-tab-selector');
+      if (selector) selector.value = tabName;
+
+      // Segarkan Lucide Icons
+      lucide.createIcons();
+
+      // Special Sync Actions
+      if (tabName === 'guru') {
+        syncGuruStatsAndTables();
+      }
+    }
+
+    // --- LOGIC 1: CHAT INTERAKTIF GURU BK MOCK AI ---
+    const chatLogs = [
+      { sender: 'ilma', text: "Halo Nak, selamat datang di Ruang Bimbingan Konseling (BK) Karir. Saya Ibu Ilma Mauliani, Konselor Karir Anda. Di sini kamu bebas mengutarakan kebingungan, impian, atau bahkan kekhawatiranmu seputar masa depan tanpa takut dihakimi. Apa yang sedang memenuhi kepalamu saat ini?" }
+    ];
+
+    function renderChatLogs() {
+      const chatContainer = document.getElementById('chat-messages');
+      if (!chatContainer) return;
+      
+      chatContainer.innerHTML = '';
+      chatLogs.forEach(log => {
+        const isStudent = log.sender === 'student';
+        const msgDiv = document.createElement('div');
+        msgDiv.className = isStudent ? 'flex items-start max-w-lg space-x-3 ml-auto justify-end' : 'flex items-start max-w-lg space-x-3';
+        
+        const avatar = isStudent ? '<div class="h-8 w-8 bg-sky-50 text-sky-700 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 select-none order-2 ml-3">MK</div>' : '<div class="h-8 w-8 bg-sky-100 rounded-lg flex items-center justify-center text-sky-700 font-bold shrink-0 text-xs select-none">IM</div>';
+        
+        const chatItemBubble = `<div class="${isStudent ? 'p-3.5 bg-sky-500 text-white rounded-2xl rounded-tr-none text-xs sm:text-sm shadow-2xs leading-relaxed font-normal whitespace-pre-line order-1' : 'p-3.5 bg-white border border-slate-100 text-slate-800 rounded-2xl rounded-tl-none text-xs sm:text-sm shadow-2xs leading-relaxed font-normal whitespace-pre-line'}">${log.text}</div>`;
+        
+        msgDiv.innerHTML = avatar + chatItemBubble;
+        chatContainer.appendChild(msgDiv);
+      });
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function handleSendChat(event) {
+      event.preventDefault();
+      const input = document.getElementById('chat-input');
+      if (!input || !input.value.trim()) return;
+
+      const userText = input.value.trim();
+      chatLogs.push({ sender: 'student', text: userText });
+      input.value = '';
+      renderChatLogs();
+
+      // Sapaan AI responding on delay
+      setTimeout(() => {
+        let aiAdvice = "Ibu mengerti kecemasanmu, Nak. Merencanakan masa depan memang terkadang menegangkan. Mari kita perinci bersama, apakah kecenderunganmu mengarah kepada bidang Sains/Teknologi (Investigative), Sosial dan Edukasi (Social), atau Industri Kreatif?";
+        if (userText.toLowerCase().includes('nilai') || userText.toLowerCase().includes('raport') || userText.toLowerCase().includes('snbp') || userText.toLowerCase().includes('undangan')) {
+          aiAdvice = "Untuk jalur raport (SNBP), nilaimu perlu diakumulasi dan dicari grafiknya. Fokuslah mempertahankan prestasi di mapel penunjang prodi pilihanmu. Coba juga isi 'Formulir Bimbingan' di tab atas agar Ibu bisa menganalisis peluang karirmu secara detail.";
+        } else if (userText.toLowerCase().includes('ortu') || userText.toLowerCase().includes('orang tua') || userText.toLowerCase().includes('paksaan') || userText.toLowerCase().includes('ayah') || userText.toLowerCase().includes('ibu')) {
+          aiAdvice = "Dilema perbedaan impian dengan orang tua itu hal wajar. Orang tua biasanya khawatir jika bidang pilihanmu prospek finansialnya tidak kokoh. Kita bisa membuat kerangka rencana aksi konkrit dan meyakinkan beliau lewat data-data industri digital saat ini.";
+        } else if (userText.toLowerCase().includes('seni') || userText.toLowerCase().includes('gambar') || userText.toLowerCase().includes('musik') || userText.toLowerCase().includes('artistik')) {
+          aiAdvice = "Mengagumkan sekali! Bidang Seni masuk Holland tipe **Artistic**. Di dunia modern, seni bertransformasi sangat kuat menjadi industri kreatif digital seperti Game Designer, Animator, UX Designer, atau Brand Marketing, yang bayarannya sangat kompetitif!";
+        }
+        
+        chatLogs.push({ sender: 'ilma', text: aiAdvice });
+        renderChatLogs();
+      }, 1000);
+    }
+
+    function clearChat() {
+      chatLogs.length = 0;
+      chatLogs.push({ sender: 'ilma', text: "Halo Nak, selamat datang di Ruang Bimbingan Konseling (BK) Karir. Saya Ibu Ilma Mauliani, Konselor Karir Anda. Di sini kamu bebas mengutarakan kebingungan, impian, atau bahkan kekhawatiranmu seputar masa depan tanpa takut dihakimi. Apa yang sedang memenuhi kepalamu saat ini?" });
+      renderChatLogs();
+    }
+
+    // --- REKORD STORAGE MANAGEMENT (LOCAL CLIENT PERSISTENCES) ---
+    let localCounselingList = [];
+    let localRiasecList = [];
+
+    function loadStoredSubmissions() {
+      const counsels = localStorage.getItem('bk_counseling_v2');
+      if (counsels) localCounselingList = JSON.parse(counsels);
+      
+      const tests = localStorage.getItem('bk_riasec_v2');
+      if (tests) localRiasecList = JSON.parse(tests);
+    }
+
+    function saveStoredSubmissions() {
+      localStorage.setItem('bk_counseling_v2', JSON.stringify(localCounselingList));
+      localStorage.setItem('bk_riasec_v2', JSON.stringify(localRiasecList));
+    }
+
+    // --- LOGIC 2: FORMULIR COUNSELING SUBMISSION ---
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const nama = document.getElementById('c-nama').value;
+      const kelas = document.getElementById('c-kelas').value;
+      const usia = parseInt(document.getElementById('c-usia').value) || 17;
+      const curhat = document.getElementById('c-curhat').value;
+
+      // Mocking AI Response Generation locally based on input keywords
+      let analysisText = `Siswa merasa bimbang dalam membuat keputusan karir karena adanya dilema minat pribadi dengan tantangan sektoral eksternal. Minat siswa mengindikasikan ketertarikan tinggi pada sektor aktualisasi diri intelektual.`;
+      let guidanceText = `Ibu menyarankan agar Ananda ${nama} melakukan evaluasi mandiri terlebih dahulu, mempersiapkan portofolio karya, dan membangun diskusi bersahabat dengan orang tua dengan menunjukkan peta kerja industri terkini.`;
+      let sectors = ["Teknologi Digital", "Industri Kreatif & Seni", "Layanan Profesional & Konsultan"];
+      let actionPlans = [
+        "Lakukan Tes Minat Bakat Holland (RIASEC) untuk menyelaraskan hasrat dengan rekomendasi prodi ilmiah.",
+        "Susun daftar 3 alternatif program studi di universitas idaman dan diskusikan peluang beasiswa.",
+        "Agendakan bimbingan tatap muka bersama Ibu Ilma di ruang BK untuk simulasi komunikasi bersahabat dengan orang tua."
+      ];
+
+      if (curhat.toLowerCase().includes('ortu') || curhat.toLowerCase().includes('orang tua') || curhat.toLowerCase().includes('kedokteran')) {
+        analysisText = `Siswa mengalami hambatan kecemasan tinggi akibat kontras visi dengan ekspektasi orang tua yang memaksakan prodi kedokteran/bidang teknik kaku, sedangkan hasrat terdalam siswa mengedepankan kreativitas (Artistic atau Social).`;
+        guidanceText = `Untuk Ananda ${nama}, jangan berkecil hati. Orang tua menuntut bidang tersebut karena jaminan keamanan masa depan. Ibu sarankan kembangkan 'Proof-of-Concept' atau visualisasi masa depan industri desain kreatif/digital marketing untuk dipresentasikan hangat ke orang tua. Ibu siap menjembatani diskusi dengan orang tua jika diperlukan.`;
+        sectors = ["Industri Seni & Desain VDKV", "Startup Digital", "Agensi Kreatif"];
+        actionPlans = [
+          "Buktikan ketekunan dengan menyusun minimal 5 portofolio sketsa, desain grafis, atau hasil pengerjaan project mandiri.",
+          "Cari tahu jurusan baru yang memadukan Sains dan Seni seperti Teknologi Game atau Arsitektur Lanskap sebagai titik temu keinginan.",
+          "Dapatkan konseling tatap muka berkala di ruang BK untuk mempersiapkan diri menghadapi SNBT jalur cadangan."
+        ];
+      }
+
+      const generatedRecord = {
+        id: Math.random().toString(36).substring(2, 9),
+        name: nama,
+        kelas: kelas,
+        usia: usia,
+        curhat: curhat,
+        timestamp: new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        aiResponse: {
+          analysis: analysisText,
+          guidance: guidanceText,
+          actionPlan: actionPlans,
+          recommendedSectors: sectors
+        }
+      };
+
+      // Unshift to list & Save to Local storage
+      localCounselingList.unshift(generatedRecord);
+      saveStoredSubmissions();
+
+      // Render out of results UI
+      document.getElementById('res-nama').innerText = nama;
+      document.getElementById('res-kelas').innerText = `${kelas} (Usia: ${usia} Tahun)`;
+      document.getElementById('res-date').innerText = generatedRecord.timestamp.split(', ')[1] || generatedRecord.timestamp;
+      document.getElementById('res-analysis').innerText = analysisText;
+      document.getElementById('res-guidance').innerText = `"${guidanceText}"`;
+
+      const stepsContainer = document.getElementById('res-steps');
+      stepsContainer.innerHTML = '';
+      actionPlans.forEach(step => {
+        const item = document.createElement('div');
+        item.className = 'p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-700 font-medium';
+        item.innerText = `📌 ${step}`;
+        stepsContainer.appendChild(item);
+      });
+
+      const sectorsContainer = document.getElementById('res-sectors');
+      sectorsContainer.innerHTML = '';
+      sectors.forEach(sec => {
+        const span = document.createElement('span');
+        span.className = 'px-3 py-1.5 bg-gradient-to-r from-sky-500/10 to-indigo-505/10 bg-gradient-to-r from-sky-500/10 to-indigo-500/10 border border-sky-10          border border-sky-100/50 text-sky-900 font-bold text-3xs rounded-xl';
+        span.innerText = `💼 ${sec}`;
+        sectorsContainer.appendChild(span);
+      });
+
+      // Show results, hide form
+      document.getElementById('counseling-form-box').classList.add('hidden');
+      document.getElementById('counseling-result-box').classList.remove('hidden');
+
+      lucide.createIcons();
+    }
+
+    function resetCounselingForm() {
+      document.getElementById('c-curhat').value = '';
+      document.getElementById('counseling-result-box').classList.add('hidden');
+      document.getElementById('counseling-form-box').classList.remove('hidden');
+    }
+
+    // --- LOGIC 3: INTERACTIVE HOLLAND RIASEC TESTS (12-PRO QUESTIONS) ---
+    const RIASEC_QUESTIONS = [
+      { id: 'r1', category: 'Realistic', categoryLabel: 'Pragmatis (Realistic)', text: 'Saya suka memperbaiki barang, merakit komponen elektronik, atau menyusun peralatan mekanik.' },
+      { id: 'r2', category: 'Realistic', categoryLabel: 'Pragmatis (Realistic)', text: 'Saya lebih menikmati bekerja di luar ruangan atau mempraktekkan langsung keahlian fisik.' },
+      { id: 'i1', category: 'Investigative', categoryLabel: 'Riset (Investigative)', text: 'Saya senang memecahkan teka-teki logika, menganalisis data, atau meneliti fenomena alam.' },
+      { id: 'i2', category: 'Investigative', categoryLabel: 'Riset (Investigative)', text: 'Saya suka membaca artikel ilmiah, mempelajari matematika, atau mencari tahu cara kerja suatu program/mesin.' },
+      { id: 'a1', category: 'Artistic', categoryLabel: 'Artistik (Artistic)', text: 'Saya menikmati menulis cerita, melukis, bermain musik, atau mendesain sesuatu dengan estetika tinggi.' },
+      { id: 'a2', category: 'Artistic', categoryLabel: 'Artistik (Artistic)', text: 'Saya lebih suka bekerja dengan situasi yang tidak kaku/bebas dan bisa mengekspresikan ide imajinatif.' },
+      { id: 's1', category: 'Social', categoryLabel: 'Sosial (Social)', text: 'Saya senang membantu orang lain menyelesaikan masalah mereka, mengajar, atau melayani masyarakat.' },
+      { id: 's2', category: 'Social', categoryLabel: 'Sosial (Social)', text: 'Saya mudah berempati dan menikmati diskusi berkelompok untuk mencapai solusi bersama.' },
+      { id: 'e1', category: 'Enterprising', categoryLabel: 'Pebisnis (Enterprising)', text: 'Saya suka memimpin suatu proyek, membujuk orang lain, atau merencanakan strategi bisnis/penjualan.' },
+      { id: 'e2', category: 'Enterprising', categoryLabel: 'Pebisnis (Enterprising)', text: 'Saya berani mengambil risiko finansial atau sosial demi mencapai target atau kesuksesan organisasi.' },
+      { id: 'c1', category: 'Conventional', categoryLabel: 'Keteraturan (Conventional)', text: 'Saya nyaman bekerja dengan data angka yang teratur, menyusun arsip berkas, atau mengikuti instruksi baku.' },
+      { id: 'c2', category: 'Conventional', categoryLabel: 'Keteraturan (Conventional)', text: 'Saya suka merapikan jadwal, mencatat transaksi keuangan secara detail, dan menyukai keteraturan tinggi.' }
+    ];
+
+    let t_nama = '';
+    let t_kelas = '';
+    let t_usia = 17;
+    let t_answers = {};
+    let t_currIdx = 0;
+
+    function handleStartTest(event) {
+      event.preventDefault();
+      t_nama = document.getElementById('t-nama').value;
+      t_kelas = document.getElementById('t-kelas').value;
+      t_usia = parseInt(document.getElementById('t-usia').value) || 17;
+      
+      t_answers = {};
+      t_currIdx = 0;
+
+      // Show test UI
+      document.getElementById('test-register-box').classList.add('hidden');
+      document.getElementById('test-quiz-box').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = RIASEC_QUESTIONS[t_currIdx];
+      document.getElementById('q-category-tag').innerText = q.categoryLabel;
+      document.getElementById('q-number-indicator').innerText = `Pertanyaan ${t_currIdx + 1}/${RIASEC_QUESTIONS.length}`;
+      document.getElementById('q-text-card').innerText = q.text;
+
+      // Update progress bar width
+      const pct = ((t_currIdx + 1) / RIASEC_QUESTIONS.length) * 100;
+      document.getElementById('q-progress-bar').style.width = `${pct}%`;
+
+      // Back / Forward option
+      document.getElementById('q-back-btn').disabled = t_currIdx === 0;
+      document.getElementById('q-forward-btn').disabled = t_answers[q.id] === undefined;
+    }
+
+    function handleAnswer(score) {
+      const q = RIASEC_QUESTIONS[t_currIdx];
+      t_answers[q.id] = score;
+
+      if (t_currIdx < RIASEC_QUESTIONS.length - 1) {
+        setTimeout(() => {
+          t_currIdx++;
+          loadQuestion();
+        }, 120);
+      } else {
+        // Complete test dynamically
+        completeTestSubmission();
+      }
+    }
+
+    function prevQuestion() {
+      if (t_currIdx > 0) {
+        t_currIdx--;
+        loadQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (t_currIdx < RIASEC_QUESTIONS.length - 1) {
+        t_currIdx++;
+        loadQuestion();
+      }
+    }
+
+    function completeTestSubmission() {
+      // Calculate Holland Codes Scores
+      const scores = { Realistic: 0, Investigative: 0, Artistic: 0, Social: 0, Enterprising: 0, Conventional: 0 };
+      RIASEC_QUESTIONS.forEach(q => {
+        const val = t_answers[q.id] || 0;
+        scores[q.category] += val;
+      });
+
+      // Find Dominant Profile Category
+      let primaryType = 'Social';
+      let maxScore = -1;
+      Object.entries(scores).forEach(([key, val]) => {
+        if (val > maxScore) {
+          maxScore = val;
+          primaryType = key;
+        }
+      });
+
+      // Mappings
+      const reportTemplates = {
+        Realistic: {
+          typeName: "Realistic (Pragmatis & Fisik)",
+          description: "Ananda menyukai kegiatan fisik yang membutuhkan keterampilan motorik taktis, perakitan mesin, pemecahan masalah hardware atau lapangan kerja konkrit.",
+          majors: [
+            { name: "Teknik Mesin / Elektro", relevance: "Sesuai dengan kegemaran merakit logika kawat fisik." },
+            { name: "Agribisnis & Teknologi Pangan", relevance: "Manajemen lapangan terbuka luar ruangan alami." },
+            { name: "Ilmu Penerbangan / Maritim", relevance: "Operasional armada taktis di laut atau udara." }
+          ],
+          careers: [
+            { title: "Hardware Systems Engineer", description: "Perancang skema pemicu sirkuit komponen digital.", demand: "Tinggi", salaryRange: "Rp 8jt - 15jt" },
+            { title: "Avionics Specialist", description: "Insinyur pemelihara navigasi sensor pesawat udara.", demand: "Sedang", salaryRange: "Rp 12jt - 20jt" }
+          ],
+          strategy: ["Ikut olimpiade robotik/otomotif", "Gunakan praktek kerja kriya nyata", "Prioritaskan kampus kejuruan (politeknik)"]
+        },
+        Investigative: {
+          typeName: "Investigative (Sains & Laboratorium)",
+          description: "Ananda memiliki kecerdasan tajam di bidang analisis data abstrak, penelitian hipotesis ilmiah, pemecahan teka-teki logika matematika, dan ketelitian insting.",
+          majors: [
+            { name: "Sains Data & Kecerdasan Buatan", relevance: "Mengolah statistik matematika menjadi inovasi modern." },
+            { name: "Farmasi & Biologi Klinis", relevance: "Riset mikroskopik untuk kesehatan manusia." },
+            { name: "Fisika / Astronomi", relevance: "Penelitian rahasia alam semesta secara matematis." }
+          ],
+          careers: [
+            { title: "Artifical Intelligence Engineer", description: "Arsitek neural network modern.", demand: "Sangat Tinggi", salaryRange: "Rp 15jt - 28jt" },
+            { title: "Epidemiologist Researches", description: "Data scientist penemu peta persebaran kuman medis.", demand: "Tinggi", salaryRange: "Rp 10jt - 18jt" }
+          ],
+          strategy: ["Kuasai bahasa pemrograman Python", "Bantu guru riset ilmiah sederhana", "Banyak membaca jurnal kedokteran/sains"]
+        },
+        Artistic: {
+          typeName: "Artistic (Seni & Kreatif Mandiri)",
+          description: "Ananda memancarkan kreativitas imajinatif tinggi, menyukai situasi fleksibel, estetika mengagumkan, dan mengekspresikan jati diri lewat karya visual atau tekstual.",
+          majors: [
+            { name: "Desain Komunikasi Visual (DKV)", relevance: "Memanfaatkan goresan gambar digital untuk bisnis komersial." },
+            { name: "Arsitektur & Desain Interior", relevance: "Seni tata ruang bangunan bernilai estetika tinggi." },
+            { name: "Seni Drama, Film, & Animasi", relevance: "Meluncurkan cerita fiksi imajinatif ke layar lebar lebar." }
+          ],
+          careers: [
+            { title: "Senior UI/UX Art Director", description: "Koordinator tata visual antarmuka app startup.", demand: "Sangat Tinggi", salaryRange: "Rp 12jt - 22jt" },
+            { title: "Digital Concept Animator", description: "Penggila animasi fiksi 3D karakter game/film.", demand: "Tinggi", salaryRange: "Rp 8jt - 15jt" }
+          ],
+          strategy: ["Sempurnakan portofolio digital di Behance", "Gunakan software 3D Blender/Figma", "Pelajari creative writing & narasi digital"]
+        },
+        Social: {
+          typeName: "Social (Sosial & Pembinaan Kemanusiaan)",
+          description: "Ananda memiliki empati besar, keunggulan komunikasi verbal, peduli dengan kesehatan mental sesama, serta menyukai mediasi, pengajaran, atau pemberdayaan publik.",
+          majors: [
+            { name: "Psikologi Klinis / Industri", relevance: "Riset perilaku emosi dan pemulihan kesehatan mental." },
+            { name: "Bimbingan Konseling / Pendidikan", relevance: "Belajar mendidik dan membina generasi muda masa depan." },
+            { name: "Hubungan Internasional", relevance: "Ilmu komunikasi diplomasi antar negara berbudaya." }
+          ],
+          careers: [
+            { title: "Industrial Relations Specialist", description: "Mediator kebahagiaan karyawan di perusahaan.", demand: "Tinggi", salaryRange: "Rp 9jt - 16jt" },
+            { title: "Professional Career Coach", description: "Konsesor pengembangan kepribadian dan karir mandiri.", demand: "Tinggi", salaryRange: "Rp 7jt - 12jt" }
+          ],
+          strategy: ["Aktif di korps palang merah/OSIS sekolah", "Pelajari ilmu psikologi terapan", "Latih keahlian public speaking & negosiasi"]
+        },
+        Enterprising: {
+          typeName: "Enterprising (Pebisnis & Kepemimpinan)",
+          description: "Ananda menyukai tantangan kepemimpinan kru, pandai merayu/promosi, berjiwa kompetitif, memiliki intuisi finansial agresif, dan bernafsu menggapai target strategis.",
+          majors: [
+            { name: "Manajemen & Bisnis Startup", relevance: "Studi mengatur modal bisnis dan akselerasi tim." },
+            { name: "Digital Marketing / Komunikasi", relevance: "Penetrasi kampanye iklan visual tingkat korporat." },
+            { name: "Kewirausahaan Kreatif", relevance: "Studi inkubasi ide bisnis baru yang berdaya guna." }
+          ],
+          careers: [
+            { title: "Growth Marketing Specialist", description: "Pendorong utama konversi traffic digital startup.", demand: "Sangat Tinggi", salaryRange: "Rp 12jt - 20jt" },
+            { title: "Creative Venture Entrepreneur", description: "Pendiri startup inovatif pembuat lapangan kerja baru.", demand: "Sangat Tinggi", salaryRange: "Bisnis Profit" }
+          ],
+          strategy: ["Buat proyek bisnis kecil sampingan siswa", "Ikut lomba dewan debat & kepemimpinan", "Tingkatkan kemandirian mengelola keuangan"]
+        },
+        Conventional: {
+          typeName: "Conventional (Keteraturan & Administrasi Data)",
+          description: "Ananda menikmati prosedur kerja teratur, ketepatan data transaksi keuangan, kerapian sistem arsip, serta menyukai detail tinggi untuk kepastian organisasi.",
+          majors: [
+            { name: "Akuntansi & Keuangan Kuantitatif", relevance: "Studi menyusun transparansi neraca keuangan." },
+            { name: "Sistem Informasi Manajemen", relevance: "Studi pengelolaan administrasi database modern perusahaan." },
+            { name: "Ilmu Perpustakaan & Kearsipan", relevance: "Belajar menjaga alur sirkulasi buku/arsip penting." }
+          ],
+          careers: [
+            { title: "Database Systems Administrator", description: "Pengaman alur akses query data sensitif korporasi.", demand: "Tinggi", salaryRange: "Rp 10jt - 18jt" },
+            { title: "Financial Risk Auditor", description: "Peneliti validasi kesamaan data neraca komersial.", demand: "Tinggi", salaryRange: "Rp 8jt - 14jt" }
+          ],
+          strategy: ["Ambil kursus spreadsheet Excel tingkat lanjut", "Latih kepatuhan struktur langkah baku", "Kembangkan kebiasaan mencatat arus kas harian"]
+        }
+      };
+
+      const myReport = reportTemplates[primaryType] || reportTemplates['Social'];
+
+      const generatedTestRecord = {
+        id: Math.random().toString(36).substring(2, 9),
+        name: t_nama,
+        kelas: t_kelas,
+        usia: t_usia,
+        scores: scores,
+        report: myReport,
+        timestamp: new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+      };
+
+      // Push to list and Save to local data
+      localRiasecList.unshift(generatedTestRecord);
+      saveStoredSubmissions();
+
+      // Render Hasil Assessment Card
+      document.getElementById('t-res-nama').innerText = t_nama;
+      document.getElementById('t-res-kelas').innerText = `${t_kelas} (Usia: ${t_usia} Tahun)`;
+      document.getElementById('t-res-date').innerText = generatedTestRecord.timestamp;
+      document.getElementById('t-dominant-title').innerText = myReport.typeName;
+      document.getElementById('t-dominant-desc').innerText = myReport.description;
+
+      const scoresBox = document.getElementById('scores-container-box');
+      scoresBox.innerHTML = '';
+      Object.entries(scores).forEach(([key, val]) => {
+        const pct = (val / 10) * 100;
+        const isDom = key === primaryType;
+        const col = isDom ? 'bg-indigo-50/70 border-indigo-200' : 'bg-slate-50/50 border-slate-100';
+        const barCol = isDom ? 'bg-indigo-500' : 'bg-slate-400';
+        const txtCol = isDom ? 'text-indigo-700' : 'text-slate-600';
+        
+        scoresBox.innerHTML += `
+          <div class="p-3 rounded-2xl border flex flex-col items-center justify-between text-center ${col}">
+            <div class="text-[11px] font-extrabold text-slate-700 mb-1">${key}</div>
+            <div class="relative h-14 bg-slate-200/60 rounded-full w-2.5 flex items-end">
+              <div class="rounded-full w-full ${barCol}" style="height: ${Math.max(10, pct)}%"></div>
+            </div>
+            <div class="text-xs font-black mt-2 ${txtCol}">${val}/10</div>
+          </div>
+        `;
+      });
+
+      const majorsBox = document.getElementById('t-res-majors');
+      majorsBox.innerHTML = '';
+      myReport.majors.forEach(major => {
+        majorsBox.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl">
+            <div class="text-xs font-bold text-slate-700">${major.name}</div>
+            <p class="text-[10px] text-slate-405 mt-0.5 leading-relaxed">${major.relevance}</p>
+          </div>
+        `;
+      });
+
+      const careersBox = document.getElementById('t-res-careers');
+      careersBox.innerHTML = '';
+      myReport.careers.forEach(career => {
+        careersBox.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-150 rounded-xl space-y-1">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-bold text-slate-800">${career.title}</span>
+              <span class="px-1.5 py-0.5 bg-indigo-55 bg-indigo-50 text-indigo-700 rounded text-[9px] font-extrabold uppercase">${career.demand}</span>
+            </div>
+            <p class="text-[10px] text-slate-500 leading-tight">${career.description}</p>
+            <p class="text-[10px] text-slate-400 font-semibold uppercase">Est Gaji: ${career.salaryRange}</p>
+          </div>
+        `;
+      });
+
+      const stratBox = document.getElementById('t-res-strategy');
+      stratBox.innerHTML = '';
+      myReport.strategy.forEach(item => {
+        stratBox.innerHTML += `
+          <div class="p-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-medium text-slate-600 flex items-start space-x-1.5 leading-relaxed">
+            <span class="text-indigo-550 mr-1 select-none text-xs">📌</span>
+            <span>${item}</span>
+          </div>
+        `;
+      });
+
+      // Show Results screen
+      document.getElementById('test-quiz-box').classList.add('hidden');
+      document.getElementById('test-result-box').classList.remove('hidden');
+
+      lucide.createIcons();
+    }
+
+    function resetTest() {
+      document.getElementById('t-nama').value = '';
+      document.getElementById('test-result-box').classList.add('hidden');
+      document.getElementById('test-quiz-box').classList.add('hidden');
+      document.getElementById('test-register-box').classList.remove('hidden');
+    }
+
+    // --- LOGIC 4: PANEL BK GURU MONITOR (DASHBOARD AREA) ---
+    let isGuruAuthenticated = false;
+    let currentGuruSubTab = 'counseling_submissions';
+
+    function handleGuruLogin(event) {
+      event.preventDefault();
+      const pass = document.getElementById('g-pass').value;
+      const errorDiv = document.getElementById('login-error');
+
+      if (pass === 'ilma123') {
+        isGuruAuthenticated = true;
+        errorDiv.classList.add('hidden');
+        document.getElementById('guru-login-box').classList.add('hidden');
+        document.getElementById('guru-dashboard-box').classList.remove('hidden');
+        
+        syncGuruStatsAndTables();
+      } else {
+        errorDiv.classList.remove('hidden');
+        document.getElementById('login-error-text').innerText = "Sandi BK tidak valid. Silakan coba lagi.";
+      }
+    }
+
+    function syncGuruStatsAndTables() {
+      if (!isGuruAuthenticated) return;
+      loadStoredSubmissions();
+
+      // Stats counts
+      document.getElementById('stat-counsel').innerText = localCounselingList.length;
+      document.getElementById('stat-tests').innerText = localRiasecList.length;
+
+      const uniqueNames = new Set([
+        ...localCounselingList.map(r => r.name),
+        ...localRiasecList.map(r => r.name)
+      ]);
+      document.getElementById('stat-uniques').innerText = uniqueNames.size;
+
+      // Tables rendering
+      renderCounselingTable();
+      renderRiasecTable();
+    }
+
+    function setGuruSubTab(tabName) {
+      currentGuruSubTab = tabName;
+      const btnCounseling = document.getElementById('subtab-counseling');
+      const btnRiasec = document.getElementById('subtab-riasec');
+
+      const tableCounseling = document.getElementById('guru-counseling-table-container');
+      const tableRiasec = document.getElementById('guru-riasec-table-container');
+
+      if (tabName === 'counseling_submissions') {
+        btnCounseling.className = 'px-4 py-2 rounded-lg bg-white text-slate-800 shadow-3xs flex items-center space-x-1.5';
+        btnRiasec.className = 'px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 hover:text-slate-800';
+        tableCounseling.classList.remove('hidden');
+        tableRiasec.classList.add('hidden');
+      } else {
+        btnCounseling.className = 'px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 hover:text-slate-800';
+        btnRiasec.className = 'px-4 py-2 rounded-lg bg-white text-slate-800 shadow-3xs flex items-center space-x-1.5';
+        tableCounseling.classList.add('hidden');
+        tableRiasec.classList.remove('hidden');
+      }
+      triggerGuruSearch();
+    }
+
+    function renderCounselingTable(searchString = '') {
+      const tbody = document.getElementById('guru-counseling-tbody');
+      const emptyDiv = document.getElementById('guru-counseling-empty');
+      tbody.innerHTML = '';
+
+      const filtered = localCounselingList.filter(r => 
+        r.name.toLowerCase().includes(searchString.toLowerCase()) ||
+        r.kelas.toLowerCase().includes(searchString.toLowerCase()) ||
+        r.curhat.toLowerCase().includes(searchString.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        emptyDiv.classList.remove('hidden');
+      } else {
+        emptyDiv.classList.add('hidden');
+        filtered.forEach(record => {
+          const tr = document.createElement('tr');
+          tr.className = 'border-b border-slate-50 hover:bg-slate-50/50 transition-colors text-xs text-slate-700';
+          tr.innerHTML = `
+            <td class="py-3.5 pl-2 font-medium text-slate-500 whitespace-nowrap flex items-center space-x-1">
+              <i data-lucide="clock" class="h-3.5 w-3.5 text-slate-350 shrink-0"></i>
+              <span>${record.timestamp.split(', ')[1] || record.timestamp}</span>
+            </td>
+            <td class="py-3.5 font-extrabold text-slate-800">${record.name}</td>
+            <td class="py-3.5 whitespace-nowrap font-semibold"><span class="px-2 py-0.5 bg-slate-100 rounded text-slate-600 text-3xs">${record.kelas}</span></td>
+            <td class="py-3.5 max-w-xs truncate text-slate-600 font-normal pr-4">${record.curhat}</td>
+            <td class="py-3.5 text-right pr-2">
+              <button onclick="viewIntakeCounselingDetail('${record.id}')" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-extrabold text-3xs rounded-lg transition-all cursor-pointer">
+                <span>Dokumen BK</span>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+      lucide.createIcons();
+    }
+
+    function renderRiasecTable(searchString = '') {
+      const tbody = document.getElementById('guru-riasec-tbody');
+      const emptyDiv = document.getElementById('guru-riasec-empty');
+      tbody.innerHTML = '';
+
+      const filtered = localRiasecList.filter(r => 
+        r.name.toLowerCase().includes(searchString.toLowerCase()) ||
+        r.kelas.toLowerCase().includes(searchString.toLowerCase()) ||
+        r.report.typeName.toLowerCase().includes(searchString.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        emptyDiv.classList.remove('hidden');
+      } else {
+        emptyDiv.classList.add('hidden');
+        filtered.forEach(record => {
+          const scoresArr = Object.entries(record.scores).map(([k, v]) => `<span class="px-1.5 py-0.5 bg-slate-50 border border-slate-100 rounded text-slate-600 text-[9px] font-mono">${k[0]}:${v}</span>`);
+          
+          const tr = document.createElement('tr');
+          tr.className = 'border-b border-slate-50 hover:bg-slate-50/50 transition-colors text-xs text-slate-700';
+          tr.innerHTML = `
+            <td class="py-3.5 pl-2 font-medium text-slate-500 whitespace-nowrap flex items-center space-x-1">
+              <i data-lucide="clock" class="h-3.5 w-3.5 text-slate-350 shrink-0"></i>
+              <span>${record.timestamp.split(', ')[1] || record.timestamp}</span>
+            </td>
+            <td class="py-3.5 font-extrabold text-slate-800">${record.name}</td>
+            <td class="py-3.5 font-semibold"><span class="px-2 py-0.5 bg-slate-100 rounded text-slate-600 text-3xs">${record.kelas}</span></td>
+            <td class="py-3.5 whitespace-nowrap font-bold text-indigo-700">🎯 ${record.report.typeName.split(' ')[0]}</td>
+            <td class="py-3.5 max-w-xs"><div class="flex gap-1 overflow-x-auto">${scoresArr.join('')}</div></td>
+            <td class="py-3.5 text-right pr-2">
+              <button onclick="viewIntakeRiasecDetail('${record.id}')" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-extrabold text-3xs rounded-lg transition-all cursor-pointer">
+                <span>Hasil Tes</span>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+      lucide.createIcons();
+    }
+
+    function triggerGuruSearch() {
+      const term = document.getElementById('g-search-term').value;
+      if (currentGuruSubTab === 'counseling_submissions') {
+        renderCounselingTable(term);
+      } else {
+        renderRiasecTable(term);
+      }
+    }
+
+    function clearAllDataSystem() {
+      const c = confirm("Apakah Ibu Ilma yakin ingin menghapus seluruh data yang tercatat di laptop browser ini? Peta evaluasi akan bersih.");
+      if (c) {
+        localStorage.removeItem('bk_counseling_v2');
+        localStorage.removeItem('bk_riasec_v2');
+        syncGuruStatsAndTables();
+      }
+    }
+
+    // Modal view detail from tables
+    function viewIntakeCounselingDetail(id) {
+      const rec = localCounselingList.find(r => r.id === id);
+      if (!rec) return;
+      
+      // Inject to tab counseling and push to that result
+      document.getElementById('res-nama').innerText = rec.name;
+      document.getElementById('res-kelas').innerText = `${rec.kelas} (Usia: ${rec.usia} Tahun)`;
+      document.getElementById('res-date').innerText = rec.timestamp.split(', ')[1] || rec.timestamp;
+      document.getElementById('res-analysis').innerText = rec.aiResponse.analysis;
+      document.getElementById('res-guidance').innerText = `"${rec.aiResponse.guidance}"`;
+
+      const stepsContainer = document.getElementById('res-steps');
+      stepsContainer.innerHTML = '';
+      rec.aiResponse.actionPlan.forEach(step => {
+        const item = document.createElement('div');
+        item.className = 'p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-700 font-medium';
+        item.innerText = `📌 ${step}`;
+        stepsContainer.appendChild(item);
+      });
+
+      const sectorsContainer = document.getElementById('res-sectors');
+      sectorsContainer.innerHTML = '';
+      rec.aiResponse.recommendedSectors.forEach(sec => {
+        const span = document.createElement('span');
+        span.className = 'px-3 py-1.5 bg-gradient-to-r from-sky-500/10 to-indigo-500/10 border border-sky-100/50 text-sky-900 font-bold text-3xs rounded-xl';
+        span.innerText = `💼 ${sec}`;
+        sectorsContainer.appendChild(span);
+      });
+
+      document.getElementById('counseling-form-box').classList.add('hidden');
+      document.getElementById('counseling-result-box').classList.remove('hidden');
+      switchTab('konseling');
+    }
+
+    function viewIntakeRiasecDetail(id) {
+      const rec = localRiasecList.find(r => r.id === id);
+      if (!rec) return;
+
+      document.getElementById('t-res-nama').innerText = rec.name;
+      document.getElementById('t-res-kelas').innerText = `${rec.kelas} (Usia: ${rec.usia} Tahun)`;
+      document.getElementById('t-res-date').innerText = rec.timestamp;
+      document.getElementById('t-dominant-title').innerText = rec.report.typeName;
+      document.getElementById('t-dominant-desc').innerText = rec.report.description;
+
+      const scoresBox = document.getElementById('scores-container-box');
+      scoresBox.innerHTML = '';
+      Object.entries(rec.scores).forEach(([key, val]) => {
+        const pct = (val / 10) * 100;
+        const isDom = key === rec.report.primaryType;
+        const col = isDom ? 'bg-indigo-50/70 border-indigo-200' : 'bg-slate-50/50 border-slate-100';
+        const barCol = isDom ? 'bg-indigo-500' : 'bg-slate-400';
+        const txtCol = isDom ? 'text-indigo-700' : 'text-slate-600';
+        
+        scoresBox.innerHTML += `
+          <div class="p-3 rounded-2xl border flex flex-col items-center justify-between text-center ${col}">
+            <div class="text-[11px] font-extrabold text-slate-700 mb-1">${key}</div>
+            <div class="relative h-14 bg-slate-200/60 rounded-full w-2.5 flex items-end">
+              <div class="rounded-full w-full ${barCol}" style="height: ${Math.max(10, pct)}%"></div>
+            </div>
+            <div class="text-xs font-black mt-2 ${txtCol}">${val}/10</div>
+          </div>
+        `;
+      });
+
+      const majorsBox = document.getElementById('t-res-majors');
+      majorsBox.innerHTML = '';
+      rec.report.majors.forEach(major => {
+        majorsBox.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl">
+            <div class="text-xs font-bold text-slate-700">${major.name}</div>
+            <p class="text-[10px] text-slate-405 mt-0.5 leading-relaxed">${major.relevance}</p>
+          </div>
+        `;
+      });
+
+      const careersBox = document.getElementById('t-res-careers');
+      careersBox.innerHTML = '';
+      rec.report.careers.forEach(career => {
+        careersBox.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-150 rounded-xl space-y-1">
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-bold text-slate-800">${career.title}</span>
+              <span class="px-1.5 py-0.5 bg-indigo-55 bg-indigo-50 text-indigo-700 rounded text-[9px] font-extrabold uppercase">${career.demand}</span>
+            </div>
+            <p class="text-[10px] text-slate-500 leading-tight">${career.description}</p>
+            <p class="text-[10px] text-slate-400 font-semibold uppercase">Est Gaji: ${career.salaryRange}</p>
+          </div>
+        `;
+      });
+
+      const stratBox = document.getElementById('t-res-strategy');
+      stratBox.innerHTML = '';
+      rec.report.strategy.forEach(item => {
+        stratBox.innerHTML += `
+          <div class="p-3.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-medium text-slate-600 flex items-start space-x-1.5 leading-relaxed">
+            <span class="text-indigo-550 mr-1 select-none text-xs">📌</span>
+            <span>${item}</span>
+          </div>
+        `;
+      });
+
+      document.getElementById('test-register-box').classList.add('hidden');
+      document.getElementById('test-quiz-box').classList.add('hidden');
+      document.getElementById('test-result-box').classList.remove('hidden');
+      switchTab('tes');
+    }
+  </script>
+</body>
+</html>
